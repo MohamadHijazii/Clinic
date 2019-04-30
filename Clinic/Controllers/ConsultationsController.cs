@@ -26,6 +26,7 @@ namespace Clinic.Controllers
         //    return View(await clinicContext.ToListAsync());
         //}
 
+         
         public async Task<IActionResult> Index(string searchString)
         {
             var consultations = from c in _context.consultations.Include(c => c.doctor).Include(c => c.patient)
@@ -35,6 +36,7 @@ namespace Clinic.Controllers
             {
                 consultations = consultations.Where(s => s.title.Contains(searchString));
             }
+           
             
 
             return View(await consultations.ToListAsync());

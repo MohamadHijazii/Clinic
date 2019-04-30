@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Clinic.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1 class="text-center text-info">Looking For a Doctor ?? </h1>
+<br />
+
+<form asp-controller="SearchDoctor" method="get">
+
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" asp-action="Search" name="SearchString" placeholder="Search" aria-label="Type a name" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <input class="btn btn-outline-info" type="submit" value="Search" />
+            @if (ViewData["find"].Equals(1))
+            {
+                <button type="submit" asp-action="Index" class="close alert-danger" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            }
+        </div>
+    </div>
+</form>
+<br />
+
+@if (ViewData["find"].Equals(1))
+{
+
+    @foreach (var item in Model)
+    {
+        <dl class="row">
+            <dt class="col-sm-2 ">
+                <u class="text-danger">
+                    @Html.DisplayNameFor(model => model.fname)
+                </u>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.fname)
+            </dd>
+            <dt class="col-sm-2">
+                <u class="text-danger">
+                    @Html.DisplayNameFor(model => model.lname)
+                </u>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.lname)
+            </dd>
+            <dt class="col-sm-2">
+                <u class="text-danger">
+                    @Html.DisplayNameFor(model => model.mname)
+                </u>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.mname)
+            </dd>
+            <dt class="col-sm-2">
+                <u class="text-danger">
+                    @Html.DisplayNameFor(model => model.email)
+                </u>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.email)
+            </dd>
+            <dt class="col-sm-2">
+                <u class="text-danger">
+                    @Html.DisplayNameFor(model => model.time)
+                </u>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.time)
+            </dd>
+            <dt class="col-sm-2">
+                <u class="text-danger">
+                    @Html.DisplayNameFor(model => model.mobile)
+                </u>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.mobile)
+            </dd>
+            <dt class="col-sm-2">
+                <u class="text-danger">
+                    @Html.DisplayNameFor(model => model.speciality)
+                </u>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.speciality)
+            </dd>
+            <dt class="col-sm-2">
+                <u class="text-danger">
+                    @Html.DisplayNameFor(model => model.address)
+                </u>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.address)
+            </dd>
+            <dt class="col-sm-2">
+                <u class="text-danger">
+                    @Html.DisplayNameFor(model => model.about)
+                </u>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.about)
+            </dd>
+            <dt class="col-sm-2">
+                <u class="text-danger">
+                    @Html.DisplayNameFor(model => model.phone)
+                </u>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.phone)
+            </dd>
+        </dl>
+    }
+    }
+    else if(ViewData["find"].Equals(0))
+    {
+    <h3 class="text-danger">No Data Found</h3>
+    }
+

@@ -1,0 +1,21 @@
+﻿
+
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1 class="text-center text-info">Looking For a Doctor ?? </h1>
+<br />
+
+<form asp-controller="SearchDoctor" asp-action="Search" method="get">
+
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" name="SearchString" placeholder="Search" aria-label="Type a name" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <input class="btn btn-outline-info" type="submit" value="Search" />
+        </div>
+    </div>
+</form>
+
+<br />
