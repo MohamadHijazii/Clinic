@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Clinic.Models;
 
 namespace Clinic.Data
 {
@@ -12,5 +13,6 @@ namespace Clinic.Data
             : base(options)
         {
         }
+        public DbSet<Clinic.Models.Doctor> Doctor { get; set; }
     }
 }
