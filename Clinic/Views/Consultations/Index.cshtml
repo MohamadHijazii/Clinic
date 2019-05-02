@@ -11,17 +11,11 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<form asp-controller="Consultations" asp-action="Index" method="get">
-
     <div class="input-group mb-3">
-        <input type="text" class="form-control" name="SearchString" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-            <input class="btn btn-outline-info" type="submit" value="Search"/>
-        </div>
+        <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" title="Type in a patient name" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
     </div>  
-</form>
 <br />
-<table class="table">
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th>
@@ -64,3 +58,29 @@
 }
     </tbody>
 </table>
+
+
+
+<script>
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

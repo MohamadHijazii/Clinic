@@ -45,7 +45,18 @@ namespace Clinic.Models
         public string email { get; set; }
 
         [StringLength(100)]
-        public string display_name { get; set; }
+        public string display_name
+        {
+            get { return fname + " " + lname; }
+            set { }
+        }
+
+
+        //public string FullName
+        //{
+        //    get { return fname + " " + lname; }
+        //    set => display_name = fname + " " + lname;
+        //}
 
         [StringLength(10)]
         [Display(Name = "Gender")]
@@ -73,5 +84,7 @@ namespace Clinic.Models
         public Insurance Insurance { get; set; }
         
         public string token { set; get; }
+
+
     }
 }

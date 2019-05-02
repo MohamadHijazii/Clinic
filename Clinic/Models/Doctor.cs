@@ -42,7 +42,11 @@ namespace Clinic.Models
         public string email { get; set; }
 
         [StringLength(100)]
-        public string display_name { get; set; } 
+        public string display_name
+        {
+            get { return fname + " " + lname; }
+            set { }
+        } 
 
         [StringLength(10)]
         [Display(Name = "Gender")]
@@ -84,12 +88,5 @@ namespace Clinic.Models
         public string pr_time { get; set; }
 
 
-
-
-
-        public Doctor()
-        {
-            display_name = "Dr." + fname + mname + lname;
-        }
     }
 }
