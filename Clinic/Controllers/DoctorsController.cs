@@ -22,7 +22,11 @@ namespace Clinic.Controllers
         // GET: Doctors
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.doctors.ToListAsync());
+
+            return View(await _context.Doctor.ToListAsync());
+
         }
 
         // GET: Doctors/Details/5
@@ -34,6 +38,8 @@ namespace Clinic.Controllers
             }
 
             var doctor = await _context.doctors
+
+
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (doctor == null)
             {
@@ -74,6 +80,9 @@ namespace Clinic.Controllers
             }
 
             var doctor = await _context.doctors.FindAsync(id);
+
+            var doctor = await _context.Doctor.FindAsync(id);
+
             if (doctor == null)
             {
                 return NotFound();
@@ -124,7 +133,11 @@ namespace Clinic.Controllers
                 return NotFound();
             }
 
+
             var doctor = await _context.doctors
+
+            var doctor = await _context.Doctor
+
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (doctor == null)
             {
@@ -139,15 +152,24 @@ namespace Clinic.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
             var doctor = await _context.doctors.FindAsync(id);
             _context.doctors.Remove(doctor);
+
+            var doctor = await _context.Doctor.FindAsync(id);
+            _context.Doctor.Remove(doctor);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DoctorExists(int id)
         {
+
             return _context.doctors.Any(e => e.Id == id);
+
+            return _context.Doctor.Any(e => e.Id == id);
+
         }
     }
 }
