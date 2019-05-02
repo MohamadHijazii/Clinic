@@ -72,6 +72,9 @@ namespace Clinic
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
+
         }
     }
 }

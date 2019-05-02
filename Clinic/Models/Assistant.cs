@@ -43,7 +43,10 @@ namespace Clinic.Models
         public string email { get; set; }
 
         [StringLength(100)]
-        public string display_name { get; set; }
+        public string display_name {
+            get { return fname + " " + lname; }
+            set { }
+        }
 
         [Display(Name = "Relative Doctor")]
         public int ref_doctor { get; set; }

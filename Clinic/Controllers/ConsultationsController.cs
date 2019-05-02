@@ -20,27 +20,12 @@ namespace Clinic.Controllers
         }
 
         // GET: Consultations
-        //public async Task<IActionResult> Index()
-        //{
-        //    var clinicContext = _context.consultations.Include(c => c.doctor).Include(c => c.patient);
-        //    return View(await clinicContext.ToListAsync());
-        //}
-
-         
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index()
         {
-            var consultations = from c in _context.consultations.Include(c => c.doctor).Include(c => c.patient)
-            select c;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                consultations = consultations.Where(s => s.title.Contains(searchString));
-            }
-           
-            
-
-            return View(await consultations.ToListAsync());
+            var clinicContext = _context.consultations.Include(c => c.doctor).Include(c => c.patient);
+            return View(await clinicContext.ToListAsync());
         }
+
 
         // GET: Consultations/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -83,8 +68,8 @@ namespace Clinic.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "Id", consultation.doctor_id);
-            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "Id", consultation.patient_id);
+            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "fname", consultation.doctor_id);
+            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "fname", consultation.patient_id);
             return View(consultation);
         }
 

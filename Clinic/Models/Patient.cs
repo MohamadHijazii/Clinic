@@ -46,7 +46,6 @@ namespace Clinic.Models
         public string email { get; set; }
 
         [StringLength(100)]
-        public string display_name { get; set; }
 
         [StringLength(10)]
         [Display(Name = "Gender")]
