@@ -81,7 +81,7 @@ namespace Clinic.Controllers
 
             var doctor = await _context.doctors.FindAsync(id);
 
-            var doctor = await _context.Doctor.FindAsync(id);
+            
 
             if (doctor == null)
             {
@@ -134,7 +134,7 @@ namespace Clinic.Controllers
             }
 
 
-            var doctor = await _context.doctors
+            
 
             var doctor = await _context.Doctor
 
@@ -153,8 +153,7 @@ namespace Clinic.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
 
-            var doctor = await _context.doctors.FindAsync(id);
-            _context.doctors.Remove(doctor);
+            
 
             var doctor = await _context.Doctor.FindAsync(id);
             _context.Doctor.Remove(doctor);
