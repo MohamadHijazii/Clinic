@@ -23,12 +23,12 @@ namespace Clinic.Models
         [Display(Name = "Last Name")]
         public string lname { get; set; }
 
-        [Required]
+
         [StringLength(50)]
         [Display(Name = "Username")]
         public string username { get; set; }
 
-        [Required]
+        
         [StringLength(300)]
         [Display(Name = "Password")]
         public string pass { get; set; }

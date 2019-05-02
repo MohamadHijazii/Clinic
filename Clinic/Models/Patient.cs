@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -62,6 +63,7 @@ namespace Clinic.Models
         [StringLength(4)]
         [Display(Name = "Blood Type")]
         public string blood_type { get; set; }
+        
 
         //image here 
 
@@ -73,5 +75,6 @@ namespace Clinic.Models
         public Insurance Insurance { get; set; }
         
         public string token { set; get; }
+        }
     }
-}
+
