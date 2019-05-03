@@ -40,5 +40,8 @@ namespace Clinic.Models
 
         [StringLength(100)]
         public string fax { get; set; }
+
+        public List<Report> reports { get; set; }
+
     }
 }

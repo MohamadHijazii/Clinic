@@ -42,11 +42,15 @@ namespace Clinic.Models
         public string email { get; set; }
 
         [StringLength(100)]
+        [Display(Name = "Full Name")]
         public string display_name
         {
             get { return fname + " " + lname; }
             set { }
         } 
+
+
+        public List<Consultation> consultations { get; set; }
 
         [StringLength(10)]
         [Display(Name = "Gender")]
@@ -59,33 +63,36 @@ namespace Clinic.Models
         [StringLength(100)]
         [Display(Name = "Time")]
         public string time { get; set; }
+       // [DataType(DataType.Time)]
+       // public DateTime time { get; set; }
+
         [Display(Name = "Address")]
         public string address { get; set; }
         [Display(Name = "About")]
         public string about { get; set; }
 
 
-        [StringLength(10)]
-        public string pr_phone { get; set; }
+        //[StringLength(10)]
+        //public string pr_phone { get; set; }
 
-        [StringLength(10)]
-        public string pr_mobile { get; set; }
+        //[StringLength(10)]
+        //public string pr_mobile { get; set; }
 
-        [StringLength(10)]
-        [EmailAddress]
-        public string pr_email { get; set; }
+        //[StringLength(10)]
+        //[EmailAddress]
+        //public string pr_email { get; set; }
 
-        [StringLength(10)]
-        public string pr_mname { get; set; }
+        //[StringLength(10)]
+        //public string pr_mname { get; set; }
 
-        [StringLength(10)]
-        public string pr_address { get; set; }
+        //[StringLength(10)]
+        //public string pr_address { get; set; }
 
-        [StringLength(10)]
-        public string pr_about { get; set; }
+        //[StringLength(10)]
+        //public string pr_about { get; set; }
 
-        [StringLength(10)]
-        public string pr_time { get; set; }
+        //[StringLength(10)]
+        //public string pr_time { get; set; }
 
 
     }

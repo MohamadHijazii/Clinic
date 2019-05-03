@@ -32,13 +32,13 @@ namespace Clinic.Data.SeededData
                         lname = "Outa",
                         username = "MAO",
                         pass = "MAO@123",
-                        phone = "79194353",
+                        mobile = "79194353",
                         email = "Mohammad_Kouta@gmail.com",
                         gender = "Male",
                         address = "Trablos",
                         birthday= new DateTime(1999,4,30),
                         blood_type="A+",
-                        insurance=2
+                        insurance_id = 2
                     },
 
                        new Patient
@@ -48,13 +48,13 @@ namespace Clinic.Data.SeededData
                            lname = "Naji",
                            username = "Nojje",
                            pass = "nojje@123",
-                           phone = "76438085",
+                           mobile = "76438085",
                            email = "Mohammad_Naji@gmail.com",
                            gender = "Male",
                            address = "Aynata",
                            birthday = new DateTime(1999, 1, 1),
                            blood_type = "A+",
-                           insurance = 2
+                           insurance_id = 2
                        },
 
                           new Patient
@@ -64,13 +64,13 @@ namespace Clinic.Data.SeededData
                               lname = "Ghanem",
                               username = "MG",
                               pass = "MG@123",
-                              phone = "79130115",
+                              mobile = "79130115",
                               email = "virus@live.com",
                               gender = "Male",
                               address = "Aynata",
                               birthday = new DateTime(1997, 10, 30),
                               blood_type = "O+",
-                              insurance = 3
+                              insurance_id = 3
                           }
 
 

@@ -45,18 +45,12 @@ namespace Clinic.Models
         public string email { get; set; }
 
         [StringLength(100)]
+        [Display(Name = "Full Name")]
         public string display_name
         {
             get { return fname + " " + lname; }
             set { }
         }
-
-
-        //public string FullName
-        //{
-        //    get { return fname + " " + lname; }
-        //    set => display_name = fname + " " + lname;
-        //}
 
         [StringLength(10)]
         [Display(Name = "Gender")]
@@ -78,11 +72,14 @@ namespace Clinic.Models
 
         //insurance here
         [Display(Name = "Insurance Company")]
-        public int insurance { get; set; }
+        public int insurance_id { get; set; }
 
-        [ForeignKey("insurance")]
-        public Insurance Insurance { get; set; }
+        [ForeignKey("insurance_id")]
+        public Insurance insurance { get; set; }
         
+
+        public List<Consultation> consultations { get; set; }
+
         public string token { set; get; }
 
 

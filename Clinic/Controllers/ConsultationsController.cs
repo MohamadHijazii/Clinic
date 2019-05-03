@@ -19,6 +19,36 @@ namespace Clinic.Controllers
             _context = context;
         }
 
+            public IActionResult test()
+        {
+         return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult testing(int put)
+        {
+
+            //var reports = _context.reports
+            //    .Include(i => i.insurance)
+            //    .Include(p => p.patient)
+            //    .Include(d => d.doctor)
+            //    .FirstOrDefault(d => d.insurance.Id == put);
+
+
+            var consultations = _context.consultations
+                .Include(p => p.patient)
+                .Include(d => d.doctor);
+
+           var patients = _context.patients
+                .Include(c=> c.consultations)
+                .Where(p => p.insurance_id == put).ToList();
+
+            return View(patients);
+        }
+
+
+
         // GET: Consultations
         public async Task<IActionResult> Index()
         {
@@ -64,7 +94,25 @@ namespace Clinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(consultation);
+
+                 _context.Add(consultation);
+
+                //var reports = new Report();
+                //reports.cost = consultation.cost;
+                //reports.title = consultation.title;
+
+                //var patient = _context.patients.FindAsync(consultation.patient_id);
+                //var doctor = _context.doctors.FindAsync(consultation.doctor_id);
+
+
+                //var insur = _context.insurances.FindAsync(patient.Result.insurance_id);
+
+                //reports.insurance = await insur;
+                //reports.doctor = await doctor;
+                //reports.patient = await patient;
+                //reports.date = consultation.date;
+                //_context.reports.Add(reports);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -86,8 +134,8 @@ namespace Clinic.Controllers
             {
                 return NotFound();
             }
-            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "Id", consultation.doctor_id);
-            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "Id", consultation.patient_id);
+            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "fname", consultation.doctor_id);
+            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "fname", consultation.patient_id);
             return View(consultation);
         }
 
@@ -123,8 +171,8 @@ namespace Clinic.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "Id", consultation.doctor_id);
-            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "Id", consultation.patient_id);
+            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "fname", consultation.doctor_id);
+            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "fname", consultation.patient_id);
             return View(consultation);
         }
 
