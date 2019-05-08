@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Clinic.Models.Patient>
+
+@{
+    ViewData["Title"] = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Reports</h1>
+
+
+@if (Model.Count() > 0)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                    Patient ID
+            </th>
+            <th>
+                Patient Name
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+
+            @foreach (var consultation in item.consultations)
+            {
+                <tr>
+                    <td>                               
+                        @item.Id
+                    </td>
+                    
+                    <td>
+                        @item.display_name
+                    </td>
+                    <td>
+                        @consultation.date
+                    </td>                    
+                </tr>
+
+                <tr>
+
+                    <td>
+                        @consultation.title
+                    </td>
+
+                    <td></td>
+                    <td>
+                        <b class="text-success">COST:</b> @consultation.cost$
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+}
+else
+{
+
+    <h3 class="text-danger">No patients Available</h3>
+
+}

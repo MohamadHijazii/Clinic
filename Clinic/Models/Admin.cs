@@ -27,6 +27,7 @@ namespace Clinic.Models
         [Display(Name = "Username")]
         public string username { get; set; }
 
+        [DataType(DataType.Password)]
         [StringLength(300)]
         [Display(Name = "Password")]
         public string pass { get; set; }

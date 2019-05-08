@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Clinic.Models.Consultation>
+
+@{
+    ViewData["Title"] = "Treatment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Treatment</h1>
+
+@if (Model.Count() > 0)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.symptoms)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.diagnostics)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.temp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.blood_presure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.treatment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.insurance_conf)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.doctor.display_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.symptoms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.diagnostics)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.temp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.blood_presure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.treatment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.insurance_conf)
+            </td>
+        </tr>
+
+
+}
+    </tbody>
+</table>
+}
+else
+{
+    <h2 class="text-info">No Treatment Available for @User.Identity.Name</h2>
+}

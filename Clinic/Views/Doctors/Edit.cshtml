@@ -29,16 +29,8 @@
                 <input asp-for="lname" class="form-control" />
                 <span asp-validation-for="lname" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="username" class="control-label"></label>
-                <input asp-for="username" class="form-control" />
-                <span asp-validation-for="username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="pass" class="control-label"></label>
-                <input asp-for="pass" class="form-control" />
-                <span asp-validation-for="pass" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="email" class="form-control" />
+
             <div class="form-group">
                 <label asp-for="phone" class="control-label"></label>
                 <input asp-for="phone" class="form-control" />
@@ -49,24 +41,19 @@
                 <input asp-for="mobile" class="form-control" />
                 <span asp-validation-for="mobile" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control" />
-                <span asp-validation-for="email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="display_name" class="control-label"></label>
-                <input asp-for="display_name" class="form-control" />
-                <span asp-validation-for="display_name" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="gender" class="control-label"></label>
-                <input asp-for="gender" class="form-control" />
+
+                @Html.RadioButtonFor(model => model.gender, "Male")
+                Male
+                @Html.RadioButtonFor(model => model.gender, "Female")
+                Female
                 <span asp-validation-for="gender" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="speciality" class="control-label"></label>
-                <input asp-for="speciality" class="form-control" />
+                <select asp-for="speciality" asp-items="Model.Items" class="form-control"></select>
                 <span asp-validation-for="speciality" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -81,7 +68,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="about" class="control-label"></label>
-                <input asp-for="about" class="form-control" />
+                <textarea asp-for="about" class="form-control"></textarea>
                 <span asp-validation-for="about" class="text-danger"></span>
             </div>
             <div class="form-group">

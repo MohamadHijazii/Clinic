@@ -15,57 +15,51 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="fname" class="control-label"></label>
-                <input asp-for="fname" class="form-control" />
+                <input asp-for="fname" class="form-control" placeholder="First Name" />
                 <span asp-validation-for="fname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="mname" class="control-label"></label>
-                <input asp-for="mname" class="form-control" />
+                <input asp-for="mname" class="form-control" placeholder="Middle Name" />
                 <span asp-validation-for="mname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="lname" class="control-label"></label>
-                <input asp-for="lname" class="form-control" />
+                <input asp-for="lname" class="form-control" placeholder="Last Name" />
                 <span asp-validation-for="lname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="username" class="control-label"></label>
-                <input asp-for="username" class="form-control" />
-                <span asp-validation-for="username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="pass" class="control-label"></label>
-                <input asp-for="pass" class="form-control" />
+                <input asp-for="pass" class="form-control"  />
                 <span asp-validation-for="pass" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="phone" class="control-label"></label>
-                <input asp-for="phone" class="form-control" />
+                <input asp-for="phone" class="form-control" placeholder="Phone Number" />
                 <span asp-validation-for="phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="mobile" class="control-label"></label>
-                <input asp-for="mobile" class="form-control" />
+                <input asp-for="mobile" class="form-control" placeholder="Mobile Number" />
                 <span asp-validation-for="mobile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control" />
+                <input asp-for="email" class="form-control" placeholder="PatientEmail@Exemple.com" />
                 <span asp-validation-for="email" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="display_name" class="control-label"></label>
-                <input asp-for="display_name" class="form-control" />
-                <span asp-validation-for="display_name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="gender" class="control-label"></label>
-                <input asp-for="gender" class="form-control" />
+                <label asp-for="gender" class="control-label"></label><br />
+                @Html.RadioButtonFor(model => model.gender, "Male")
+                Male
+                @Html.RadioButtonFor(model => model.gender, "Female")
+                Female
                 <span asp-validation-for="gender" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="address" class="control-label"></label>
-                <input asp-for="address" class="form-control" />
+                <input asp-for="address" class="form-control" placeholder="Enter Address" />
                 <span asp-validation-for="address" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -75,17 +69,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="blood_type" class="control-label"></label>
-                <input asp-for="blood_type" class="form-control" />
+                <select asp-for="blood_type" asp-items="Model.BloodTypes" class="form-control" ></select>
                 <span asp-validation-for="blood_type" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="insurance_id" class="control-label"></label>
                 <select asp-for="insurance_id" class ="form-control" asp-items="ViewBag.insurance_id"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="token" class="control-label"></label>
-                <input asp-for="token" class="form-control" />
-                <span asp-validation-for="token" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

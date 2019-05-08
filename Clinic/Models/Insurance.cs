@@ -29,6 +29,7 @@ namespace Clinic.Models
         [StringLength(50)]
         public string username { get; set; }
 
+        [DataType(DataType.Password)]
         [StringLength(300)]
        // [Required]
         public string pass { get; set; }

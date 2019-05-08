@@ -23,12 +23,11 @@ namespace Clinic.Models
         [Display(Name = "Last Name")]
         public string lname { get; set; }
 
-        [Required]
         [StringLength(50)]
         [Display(Name = "Username")]
         public string username { get; set; }
 
-        [Required]
+        [DataType(DataType.Password)]
         [StringLength(300)]
         [Display(Name = "Password")]
         public string pass { get; set; }
@@ -43,6 +42,7 @@ namespace Clinic.Models
         public string email { get; set; }
 
         [StringLength(100)]
+        [Display(Name = "Full Name")]
         public string display_name {
             get { return fname + " " + lname; }
             set { }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,6 +27,7 @@ namespace Clinic.Models
         [StringLength(50)]
         public string username { get; set; }
 
+        [DataType(DataType.Password)]
         [StringLength(300)]
         public string pass { get; set; }
 
@@ -71,6 +74,9 @@ namespace Clinic.Models
         [Display(Name = "About")]
         public string about { get; set; }
 
+        [NotMapped]
+        public IEnumerable<SelectListItem> Items { get; set; } 
+    
 
         //[StringLength(10)]
         //public string pr_phone { get; set; }

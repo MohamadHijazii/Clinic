@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Data;
 using Clinic.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Clinic.Controllers
 {
@@ -19,36 +20,35 @@ namespace Clinic.Controllers
             _context = context;
         }
 
-            public IActionResult test()
+  
+
+        public IActionResult Report()
         {
-         return View();
-        }
-
-
-        [HttpPost]
-        public IActionResult testing(int put)
-        {
-
-            //var reports = _context.reports
-            //    .Include(i => i.insurance)
-            //    .Include(p => p.patient)
-            //    .Include(d => d.doctor)
-            //    .FirstOrDefault(d => d.insurance.Id == put);
-
-
             var consultations = _context.consultations
                 .Include(p => p.patient)
                 .Include(d => d.doctor);
 
-           var patients = _context.patients
-                .Include(c=> c.consultations)
-                .Where(p => p.insurance_id == put).ToList();
+            var insurance = _context.insurances.FirstOrDefault(p=>p.email==User.Identity.Name);
+
+
+            var patients = _context.patients
+                 .Include(c => c.consultations)
+                .Where(p => p.insurance_id == insurance.Id).ToList();
 
             return View(patients);
         }
 
 
+        [Authorize(Roles = "Patient")]
+        // GET: Treatment
+        public IActionResult Treatment()
+        {
+            var user = _context.patients.FirstOrDefault(m => m.email == User.Identity.Name);
+            var treatments = _context.consultations.Include(c => c.doctor).Include(c => c.patient).Where(p=>p.patient_id == user.Id).ToList();
+            return View(treatments);
+        }
 
+        [Authorize(Roles = "Doctor,Admin")]
         // GET: Consultations
         public async Task<IActionResult> Index()
         {
@@ -56,7 +56,7 @@ namespace Clinic.Controllers
             return View(await clinicContext.ToListAsync());
         }
 
-
+        [Authorize(Roles = "Doctor,Admin")]
         // GET: Consultations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -77,11 +77,12 @@ namespace Clinic.Controllers
             return View(consultation);
         }
 
+        [Authorize(Roles = "Doctor")]
         // GET: Consultations/Create
         public IActionResult Create()
         {
-            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "fname");
-            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "fname");
+            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "display_name");
+            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "display_name");
             return View();
         }
 
@@ -90,37 +91,24 @@ namespace Clinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,patient_id,doctor_id,title,type,date,symptoms,diagnostics,temp,blood_presure,cost,treatment,insurance_conf")] Consultation consultation)
+        public async Task<IActionResult> Create([Bind("Id,patient_id,title,type,date,symptoms,diagnostics,temp,blood_presure,cost,treatment,insurance_conf")] Consultation consultation)
         {
             if (ModelState.IsValid)
             {
+                var doctor = _context.doctors.FirstOrDefault(p=>p.email==User.Identity.Name);
 
+                consultation.doctor_id = doctor.Id;
                  _context.Add(consultation);
-
-                //var reports = new Report();
-                //reports.cost = consultation.cost;
-                //reports.title = consultation.title;
-
-                //var patient = _context.patients.FindAsync(consultation.patient_id);
-                //var doctor = _context.doctors.FindAsync(consultation.doctor_id);
-
-
-                //var insur = _context.insurances.FindAsync(patient.Result.insurance_id);
-
-                //reports.insurance = await insur;
-                //reports.doctor = await doctor;
-                //reports.patient = await patient;
-                //reports.date = consultation.date;
-                //_context.reports.Add(reports);
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "fname", consultation.doctor_id);
-            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "fname", consultation.patient_id);
+            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "display_name", consultation.doctor_id);
+            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "display_name", consultation.patient_id);
             return View(consultation);
         }
 
+        [Authorize(Roles = "Doctor")]
         // GET: Consultations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -134,8 +122,8 @@ namespace Clinic.Controllers
             {
                 return NotFound();
             }
-            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "fname", consultation.doctor_id);
-            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "fname", consultation.patient_id);
+            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "display_name", consultation.doctor_id);
+            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "display_name", consultation.patient_id);
             return View(consultation);
         }
 
@@ -171,11 +159,12 @@ namespace Clinic.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "fname", consultation.doctor_id);
-            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "fname", consultation.patient_id);
+            ViewData["doctor_id"] = new SelectList(_context.doctors, "Id", "display_name", consultation.doctor_id);
+            ViewData["patient_id"] = new SelectList(_context.patients, "Id", "display_name", consultation.patient_id);
             return View(consultation);
         }
 
+        [Authorize(Roles = "Doctor")]
         // GET: Consultations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

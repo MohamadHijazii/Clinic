@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,6 +28,7 @@ namespace Clinic.Models
         [Display(Name = "Username")]
         public string username { get; set; }
 
+        [DataType(DataType.Password)]
         [StringLength(300)]
         [Display(Name = "Password")]
         public string pass { get; set; }
@@ -64,7 +66,6 @@ namespace Clinic.Models
         [Display(Name = "Birthday")]
         public DateTime birthday { get; set; }
 
-        [StringLength(4)]
         [Display(Name = "Blood Type")]
         public string blood_type { get; set; }
 
@@ -81,6 +82,9 @@ namespace Clinic.Models
         public List<Consultation> consultations { get; set; }
 
         public string token { set; get; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> BloodTypes { get; set; }
 
 
     }

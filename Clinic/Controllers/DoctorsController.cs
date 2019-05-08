@@ -7,16 +7,39 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Data;
 using Clinic.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Text;
 
 namespace Clinic.Controllers
 {
+
+    [Authorize(Roles ="Admin")]
     public class DoctorsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public DoctorsController(ApplicationDbContext context)
+
+
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ILogger<Doctor> _logger;
+        private readonly IEmailSender _emailSender;
+
+
+        public DoctorsController(
+            ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            ILogger<Doctor> logger,
+            IEmailSender emailSender)
         {
             _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _logger = logger;
+            _emailSender = emailSender;
         }
 
         // GET: Doctors
@@ -46,7 +69,25 @@ namespace Clinic.Controllers
         // GET: Doctors/Create
         public IActionResult Create()
         {
-            return View();
+
+            var doctor = new Doctor();
+
+            var specialty = new List<SelectListItem>
+        {
+                new SelectListItem {Value="Cardiologist",Text="Cardiologist"},
+                new SelectListItem {Value="Surgeon",Text="Surgeon"},
+                new SelectListItem {Value="Psychiatrist",Text="Psychiatrist"},
+                new SelectListItem {Value="Dermatologist",Text="Dermatologist"},
+                new SelectListItem {Value="Nephrologist",Text="Nephrologist"},
+                new SelectListItem {Value="Ophthalmologist",Text="Ophthalmologist"},
+                new SelectListItem {Value="Otolaryngologist",Text="Otolaryngologist"},
+                new SelectListItem {Value="Neurologist",Text="Neurologist"},
+                new SelectListItem {Value="Radiologist",Text="Radiologist"}
+        };
+
+            doctor.Items = specialty;
+
+            return View(doctor);
         }
 
         // POST: Doctors/Create
@@ -58,10 +99,40 @@ namespace Clinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(doctor);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var user2 = new IdentityUser { UserName = doctor.email, Email = doctor.email,PhoneNumber=doctor.mobile};
+                var result = await _userManager.CreateAsync(user2, "Test@123");
+
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("Admin created a new Doctor with password.");
+                    _context.Add(doctor);
+
+                    await _context.SaveChangesAsync();
+                    await _userManager.AddToRoleAsync(user2, "Doctor");
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
+
+            var specialty = new List<SelectListItem>
+        {
+                new SelectListItem {Value="Cardiologist",Text="Cardiologist"},
+                new SelectListItem {Value="Surgeon",Text="Surgeon"},
+                new SelectListItem {Value="Psychiatrist",Text="Psychiatrist"},
+                new SelectListItem {Value="Dermatologist",Text="Dermatologist"},
+                new SelectListItem {Value="Nephrologist",Text="Nephrologist"},
+                new SelectListItem {Value="Ophthalmologist",Text="Ophthalmologist"},
+                new SelectListItem {Value="Otolaryngologist",Text="Otolaryngologist"},
+                new SelectListItem {Value="Neurologist",Text="Neurologist"},
+                new SelectListItem {Value="Radiologist",Text="Radiologist"}
+        };
+
+            doctor.Items = specialty;
+
             return View(doctor);
         }
 
@@ -73,7 +144,24 @@ namespace Clinic.Controllers
                 return NotFound();
             }
 
+            var specialty = new List<SelectListItem>
+        {
+                new SelectListItem {Value="Cardiologist",Text="Cardiologist"},
+                new SelectListItem {Value="Surgeon",Text="Surgeon"},
+                new SelectListItem {Value="Psychiatrist",Text="Psychiatrist"},
+                new SelectListItem {Value="Dermatologist",Text="Dermatologist"},
+                new SelectListItem {Value="Nephrologist",Text="Nephrologist"},
+                new SelectListItem {Value="Ophthalmologist",Text="Ophthalmologist"},
+                new SelectListItem {Value="Otolaryngologist",Text="Otolaryngologist"},
+                new SelectListItem {Value="Neurologist",Text="Neurologist"},
+                new SelectListItem {Value="Radiologist",Text="Radiologist"}
+        };
+
+
             var doctor = await _context.doctors.FindAsync(id);
+
+            doctor.Items = specialty;
+
             if (doctor == null)
             {
                 return NotFound();
@@ -140,6 +228,23 @@ namespace Clinic.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var doctor = await _context.doctors.FindAsync(id);
+
+            var user = await _userManager.FindByEmailAsync(doctor.email);
+
+
+            var rolesForUser = await _userManager.GetRolesAsync(user);
+          
+                if (rolesForUser.Count() > 0)
+                {
+                    foreach (var item in rolesForUser.ToList())
+                    {
+                        // item should be the name of the role
+                        var result = await _userManager.RemoveFromRoleAsync(user, item);
+                    }
+
+                await _userManager.DeleteAsync(user);
+            }
+
             _context.doctors.Remove(doctor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -149,5 +254,50 @@ namespace Clinic.Controllers
         {
             return _context.doctors.Any(e => e.Id == id);
         }
+
+
+        //[HttpGet]
+        //public string GeneratePassword()
+        //{
+        //    var options = _userManager.Options.Password;
+
+        //    int length = options.RequiredLength;
+
+        //    bool nonAlphanumeric = options.RequireNonAlphanumeric;
+        //    bool digit = options.RequireDigit;
+        //    bool lowercase = options.RequireLowercase;
+        //    bool uppercase = options.RequireUppercase;
+
+        //    StringBuilder password = new StringBuilder();
+        //    Random random = new Random();
+
+        //    while (password.Length < length)
+        //    {
+        //        char c = (char)random.Next(32, 126);
+
+        //        password.Append(c);
+
+        //        if (char.IsDigit(c))
+        //            digit = false;
+        //        else if (char.IsLower(c))
+        //            lowercase = false;
+        //        else if (char.IsUpper(c))
+        //            uppercase = false;
+        //        else if (!char.IsLetterOrDigit(c))
+        //            nonAlphanumeric = false;
+        //    }
+
+        //    if (nonAlphanumeric)
+        //        password.Append((char)random.Next(33, 48));
+        //    if (digit)
+        //        password.Append((char)random.Next(48, 58));
+        //    if (lowercase)
+        //        password.Append((char)random.Next(97, 123));
+        //    if (uppercase)
+        //        password.Append((char)random.Next(65, 91));
+
+        //    return password.ToString();
+        //}
+
     }
 }

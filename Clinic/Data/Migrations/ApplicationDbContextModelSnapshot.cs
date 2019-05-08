@@ -81,7 +81,6 @@ namespace Clinic.Data.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("pass")
-                        .IsRequired()
                         .HasMaxLength(300);
 
                     b.Property<string>("phone")
@@ -90,7 +89,6 @@ namespace Clinic.Data.Migrations
                     b.Property<int>("ref_doctor");
 
                     b.Property<string>("username")
-                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.HasKey("Id");
@@ -315,8 +313,7 @@ namespace Clinic.Data.Migrations
 
                     b.Property<DateTime>("birthday");
 
-                    b.Property<string>("blood_type")
-                        .HasMaxLength(4);
+                    b.Property<string>("blood_type");
 
                     b.Property<string>("display_name")
                         .HasMaxLength(100);
@@ -647,11 +644,9 @@ namespace Clinic.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -682,11 +677,9 @@ namespace Clinic.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 

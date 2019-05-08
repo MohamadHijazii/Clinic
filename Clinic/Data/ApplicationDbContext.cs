@@ -30,6 +30,5 @@ namespace Clinic.Data
         public DbSet<Reminder_patient> reminder_Patients { get; set; }
         public DbSet<Reminder_assistant> reminder_Assistants { get; set; }
 
-
     }
 }

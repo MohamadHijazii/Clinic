@@ -7,16 +7,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic.Data;
 using Clinic.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace Clinic.Controllers
 {
+
+    [Authorize(Roles = "Admin")]
     public class InsurancesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public InsurancesController(ApplicationDbContext context)
+        private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ILogger<Insurance> _logger;
+
+
+        public InsurancesController(
+            ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            ILogger<Insurance> logger)
         {
             _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _logger = logger;
         }
 
         // GET: Insurances
@@ -58,9 +74,23 @@ namespace Clinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(insurance);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var user2 = new IdentityUser { UserName = insurance.email, Email = insurance.email, PhoneNumber = insurance.phone };
+                var result = await _userManager.CreateAsync(user2, "Test@123");
+
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("Admin created a new Insurance with password.");
+                    _context.Add(insurance);
+
+                    await _context.SaveChangesAsync();
+                    await _userManager.AddToRoleAsync(user2, "Insurance");
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
             return View(insurance);
         }
@@ -140,6 +170,23 @@ namespace Clinic.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var insurance = await _context.insurances.FindAsync(id);
+
+            var user = await _userManager.FindByEmailAsync(insurance.email);
+
+
+            var rolesForUser = await _userManager.GetRolesAsync(user);
+
+            if (rolesForUser.Count() > 0)
+            {
+                foreach (var item in rolesForUser.ToList())
+                {
+                    // item should be the name of the role
+                    var result = await _userManager.RemoveFromRoleAsync(user, item);
+                }
+
+                await _userManager.DeleteAsync(user);
+            }
+
             _context.insurances.Remove(insurance);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
