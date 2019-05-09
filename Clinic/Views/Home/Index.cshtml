@@ -1,38 +1,97 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome <span class="text-warning">to</span> our <span class="text-warning">Clinic</span> </h1>
-    <h2>:)</h2>
-</div>
-
-<h4 class="text-danger">Accounts:</h4>
-<ul>
-    <li>
-        admin@admin.com
-    </li>
-
-    <li>
-        doctor@doctor.com
-    </li>
-
-    <li>
-        assisstant@assisstant.com
-    </li>
-
-    <li>
-        insurance@insurance.com
-    </li>
+@if (SignInManager.IsSignedIn(User))
+{
+    if (User.IsInRole("Doctor"))
+    {
+        <div class="text-center">
+            <h1 class="display-4">Welcome <span class="text-info">Doctor</span> </h1>
+            <h2>:)</h2>
+        </div>
+    }
 
 
-    <li>
-        patient@patient.com
-    </li>
-</ul>
+    if (User.IsInRole("Admin"))
+    {
+        <div class="text-center">
+            <h1 class="display-4">Welcome <span class="text-info">Admin</span> </h1>
+            <h2>:)</h2>
+        </div>
+    }
 
-<p>They all have <a id="pass" title="Press to unlock">********</a> as <b>password</b></p>
 
+    if (User.IsInRole("Assisstant"))
+    {
+        <div class="text-center">
+            <h1 class="display-4">Welcome <span class="text-info">Assisstant</span> </h1>
+            <h2>:)</h2>
+        </div>
+    }
+
+
+
+    if (User.IsInRole("Patient"))
+    {
+        <div class="text-center">
+            <h1 class="display-4">Welcome <span class="text-info">Patient</span> </h1>
+            <h2>:)</h2>
+        </div>
+    }
+
+
+
+    if (User.IsInRole("Insurance"))
+    {
+        <div class="text-center">
+            <h1 class="display-4">Welcome <span class="text-info">Insurance</span> </h1>
+            <h2>:)</h2>
+        </div>
+    }
+
+
+
+
+}
+else
+{
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome <span class="text-warning">to</span> our <span class="text-warning">Clinic</span> </h1>
+        <h2>:)</h2>
+    </div>
+
+    <h4 class="text-danger">Accounts:</h4>
+    <ul>
+        <li>
+            admin@admin.com
+        </li>
+
+        <li>
+            doctor@doctor.com
+        </li>
+
+        <li>
+            assisstant@assistant.com
+        </li>
+
+        <li>
+            insurance@insurance.com
+        </li>
+
+
+        <li>
+            patient@patient.com
+        </li>
+    </ul>
+
+    <p>They all have <a id="pass" title="Press to unlock">********</a> as <b>password</b></p>
+}
 
 <script>
     $(document).ready(function () {
@@ -40,4 +99,4 @@
             $("#pass").html("<i>Test@123</i>");
         });
     });
-    </script>
+</script>

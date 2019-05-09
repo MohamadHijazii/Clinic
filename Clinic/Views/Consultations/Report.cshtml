@@ -11,6 +11,7 @@
 @if (Model.Count() > 0)
 {
     <table class="table">
+        <caption>@Model.Count() Patient available</caption>
         <thead class="thead-light" >
             <tr>
                 <th scope="row">
@@ -25,35 +26,37 @@
             </tr>
         </thead>
         <tbody>
+
             @foreach (var item in Model)
             {
-                @foreach (var consultation in item.consultations)
-                {
-                    <tr class="table-light">
-                        <th scope="row">
-                            @item.Id
+                
+                    @foreach (var consultation in item.consultations)
+                    {
+                        <tr class="table-light">
+                            <th scope="row">
+                                @item.Id
                             </th>
 
-                       <td>
-                            @item.display_name
-                        </td>
-                        <td>
-                            @consultation.date
-                        </td>
-                    </tr>
+                            <td>
+                                @item.display_name
+                            </td>
+                            <td>
+                                @consultation.date
+                            </td>
+                        </tr>
 
-                    <tr class="table-primary">
+                        <tr class="table-primary">
 
-                        <td>
-                            @consultation.title
-                        </td>
+                            <td>
+                                @consultation.title
+                            </td>
 
-                        <td></td>
-                        <td class="alert alert-success table-active">
-                            <b class="text-danger">COST:</b> <b>@consultation.cost$</b>
-                        </td>
-                    </tr>
-                }
+                            <td></td>
+                            <td class="alert alert-success table-active">
+                                <b class="text-danger">COST:</b> <b>@consultation.cost$</b>
+                            </td>
+                        </tr>
+                    }
             }
         </tbody>
     </table>

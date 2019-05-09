@@ -11,6 +11,8 @@
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
+    <caption>@Model.Count() Message available</caption>
+
     <thead>
         <tr>
             <th>
@@ -32,36 +34,37 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                <b> <a asp-action="Details" asp-route-id="@item.Id">   @Html.DisplayFor(modelItem => item.subject)</a></b>
-             </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    <b> <a asp-action="Details" asp-route-id="@item.Id">   @Html.DisplayFor(modelItem => item.subject)</a></b>
+                </td>
+                <td>
 
-                @if (!string.IsNullOrEmpty(item.message) && item.message.Length > 20)
-                {
-                <span class="text-muted">@Html.Raw(item.message.Substring(0, 20))...</span>
-                }
-                else
-                {
-                    <span class="text-muted">@Html.Raw(item.message)</span>
-                }
+                    @if (!string.IsNullOrEmpty(item.message) && item.message.Length > 20)
+                    {
+                        <span class="text-muted">@Html.Raw(item.message.Substring(0, 20))...</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">@Html.Raw(item.message)</span>
+                    }
 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.date)
-            </td>
-            <td>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
