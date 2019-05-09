@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace Clinic.Controllers
 {
@@ -23,14 +24,14 @@ namespace Clinic.Controllers
 
 
 
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<Doctor> _logger;
         private readonly IEmailSender _emailSender;
 
 
         public DoctorsController(
-            ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            ApplicationDbContext context, UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             ILogger<Doctor> logger,
             IEmailSender emailSender)
@@ -99,15 +100,13 @@ namespace Clinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user2 = new IdentityUser { UserName = doctor.email, Email = doctor.email,PhoneNumber=doctor.mobile};
+                var user2 = new ApplicationUser { UserName = doctor.email, Email = doctor.email,PhoneNumber=doctor.mobile,fname=doctor.fname,mname= doctor.mname,lname=doctor.lname};
                 var result = await _userManager.CreateAsync(user2, "Test@123");
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("Admin created a new Doctor with password.");
                     _context.Add(doctor);
-
-                    await _context.SaveChangesAsync();
                     await _userManager.AddToRoleAsync(user2, "Doctor");
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

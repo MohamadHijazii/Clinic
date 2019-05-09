@@ -20,13 +20,13 @@ namespace Clinic.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<Patient> _logger;
         private readonly IEmailSender _emailSender;
 
         public PatientsController(
-            ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            ApplicationDbContext context, UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             ILogger<Patient> logger,
             IEmailSender emailSender)
@@ -98,7 +98,7 @@ namespace Clinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user2 = new IdentityUser { UserName = patient.email, Email = patient.email, PhoneNumber = patient.mobile };
+                var user2 = new ApplicationUser { UserName = patient.email, Email = patient.email, PhoneNumber = patient.mobile,fname=patient.fname,mname=patient.mname,lname=patient.lname};
                 var result = await _userManager.CreateAsync(user2, "Test@123");
 
                 if (result.Succeeded)

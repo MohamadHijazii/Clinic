@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Clinic.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Clinic.Data.Migrations;
+using Clinic.Models;
 
 namespace Clinic
 {
@@ -29,18 +29,9 @@ namespace Clinic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-
-
 
             //Password Strength Setting
             services.Configure<IdentityOptions>(options =>
@@ -81,7 +72,7 @@ namespace Clinic
             });
 
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultUI(UIFramework.Bootstrap4)
              .AddDefaultTokenProviders();
@@ -117,7 +108,7 @@ namespace Clinic
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            CreateRoles(serviceProvider).Wait();
+           CreateRoles(serviceProvider).Wait();
 
         }
 
@@ -125,7 +116,7 @@ namespace Clinic
         {
             //initializing custom roles   
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             string[] roleNames = { "Admin", "Doctor", "Patient","Assistant","Insurance" };
             IdentityResult roleResult;
 
@@ -139,18 +130,98 @@ namespace Clinic
                 }
             }
 
-            IdentityUser user = await UserManager.FindByEmailAsync("admin@admin.com");
+            ApplicationUser admin = await UserManager.FindByEmailAsync("admin@admin.com");
 
-            if (user == null)
+            if (admin == null)
             {
-                user = new IdentityUser()
+                admin = new ApplicationUser()
                 {
                     UserName = "admin@admin.com",
                     Email = "admin@admin.com",
+                    fname="admin",
+                    lname="admin"
                 };
-                await UserManager.CreateAsync(user, "Test@123");
+       
+
+                await UserManager.CreateAsync(admin, "Test@123");
             }
-            await UserManager.AddToRoleAsync(user, "Admin");           
+            await UserManager.AddToRoleAsync(admin, "Admin");
+
+
+
+            ApplicationUser doctor = await UserManager.FindByEmailAsync("doctor@doctor.com");
+
+            if (doctor == null)
+            {
+                doctor = new ApplicationUser()
+                {
+                    UserName = "doctor@doctor.com",
+                    Email = "doctor@doctor.com",
+                    fname = "doctor",
+                    lname = "doctor"
+                };
+                await UserManager.CreateAsync(doctor, "Test@123");
+            }
+            await UserManager.AddToRoleAsync(doctor, "Doctor");
+
+
+
+            ApplicationUser patient = await UserManager.FindByEmailAsync("patient@patient.com");
+
+            if (patient == null)
+            {
+                patient = new ApplicationUser()
+                {
+                    UserName = "patient@patient.com",
+                    Email = "patient@patient.com",
+                    fname = "patient",
+                    lname = "patient"
+                };
+                await UserManager.CreateAsync(patient, "Test@123");
+            }
+            await UserManager.AddToRoleAsync(patient, "Patient");
+
+
+
+            ApplicationUser assistant = await UserManager.FindByEmailAsync("assistant@assistant.com");
+
+            if (assistant == null)
+            {
+                assistant = new ApplicationUser()
+                {
+                    UserName = "assistant@assistant.com",
+                    Email = "assistant@assistant.com",
+                    fname = "assistant",
+                    lname = "assistant"
+                };
+                await UserManager.CreateAsync(assistant, "Test@123");
+            }
+            await UserManager.AddToRoleAsync(assistant, "Assistant");
+
+
+
+            ApplicationUser insurance = await UserManager.FindByEmailAsync("insurance@insurance.com");
+
+            if (insurance == null)
+            {
+                insurance = new ApplicationUser()
+                {
+                    UserName = "insurance@insurance.com",
+                    Email = "insurance@insurance.com",
+                    fname = "insurance",
+                    lname = "insurance"
+                };
+                await UserManager.CreateAsync(insurance, "Test@123");
+            }
+            await UserManager.AddToRoleAsync(insurance, "Insurance");
+
+
+
+
+
+
+
+
 
         }
 

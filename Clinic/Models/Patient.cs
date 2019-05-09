@@ -71,6 +71,10 @@ namespace Clinic.Models
 
         //image here 
 
+
+        public string UserID { get; set; }
+
+
         //insurance here
         [Display(Name = "Insurance Company")]
         public int insurance_id { get; set; }

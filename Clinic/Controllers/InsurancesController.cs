@@ -19,13 +19,13 @@ namespace Clinic.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<Insurance> _logger;
 
 
         public InsurancesController(
-            ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            ApplicationDbContext context, UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             ILogger<Insurance> logger)
         {
@@ -74,7 +74,7 @@ namespace Clinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user2 = new IdentityUser { UserName = insurance.email, Email = insurance.email, PhoneNumber = insurance.phone };
+                var user2 = new ApplicationUser { UserName = insurance.email, Email = insurance.email, PhoneNumber = insurance.phone, fname = insurance.name};
                 var result = await _userManager.CreateAsync(user2, "Test@123");
 
                 if (result.Succeeded)
@@ -102,7 +102,6 @@ namespace Clinic.Controllers
             {
                 return NotFound();
             }
-
             var insurance = await _context.insurances.FindAsync(id);
             if (insurance == null)
             {

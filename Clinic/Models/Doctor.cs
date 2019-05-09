@@ -50,7 +50,10 @@ namespace Clinic.Models
         {
             get { return fname + " " + lname; }
             set { }
-        } 
+        }
+
+
+        public string UserID { get; set; }
 
 
         public List<Consultation> consultations { get; set; }

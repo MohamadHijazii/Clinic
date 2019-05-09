@@ -19,14 +19,14 @@ namespace Clinic.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<Assistant> _logger;
         private readonly IEmailSender _emailSender;
 
 
         public AssistantsController(
-            ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            ApplicationDbContext context, UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             ILogger<Assistant> logger,
             IEmailSender emailSender)
@@ -80,7 +80,7 @@ namespace Clinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user2 = new IdentityUser { UserName = assistant.email, Email = assistant.email,PhoneNumber= assistant.phone};
+                var user2 = new ApplicationUser { UserName = assistant.email, Email = assistant.email,PhoneNumber= assistant.phone, fname = assistant.fname, mname = assistant.mname, lname = assistant.lname };
                 var result = await _userManager.CreateAsync(user2, "Test@123");
 
                 if (result.Succeeded)

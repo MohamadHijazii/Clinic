@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Home Page";
@@ -8,10 +8,13 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
+
+    var user = @UserManager.GetUserAsync(User);
+
     if (User.IsInRole("Doctor"))
     {
         <div class="text-center">
-            <h1 class="display-4">Welcome <span class="text-info">Doctor</span> </h1>
+            <h1 class="display-4">Welcome <span class="text-info">Dr. @user.Result.fname </span> </h1>
             <h2>:)</h2>
         </div>
     }
@@ -20,7 +23,7 @@
     if (User.IsInRole("Admin"))
     {
         <div class="text-center">
-            <h1 class="display-4">Welcome <span class="text-info">Admin</span> </h1>
+            <h1 class="display-4">Welcome <span class="text-info">Admin -  @user.Result.fname</span> </h1>
             <h2>:)</h2>
         </div>
     }
@@ -29,7 +32,7 @@
     if (User.IsInRole("Assisstant"))
     {
         <div class="text-center">
-            <h1 class="display-4">Welcome <span class="text-info">Assisstant</span> </h1>
+            <h1 class="display-4">Welcome <span class="text-info">Assisstant -  @user.Result.fname</span> </h1>
             <h2>:)</h2>
         </div>
     }
@@ -39,7 +42,7 @@
     if (User.IsInRole("Patient"))
     {
         <div class="text-center">
-            <h1 class="display-4">Welcome <span class="text-info">Patient</span> </h1>
+            <h1 class="display-4">Welcome <span class="text-info">Patient -  @user.Result.fname</span> </h1>
             <h2>:)</h2>
         </div>
     }
@@ -49,7 +52,7 @@
     if (User.IsInRole("Insurance"))
     {
         <div class="text-center">
-            <h1 class="display-4">Welcome <span class="text-info">Insurance</span> </h1>
+            <h1 class="display-4">Welcome <span class="text-info">Insurance -  @user.Result.fname</span> </h1>
             <h2>:)</h2>
         </div>
     }
@@ -77,7 +80,7 @@ else
         </li>
 
         <li>
-            assisstant@assistant.com
+            assistant@assistant.com
         </li>
 
         <li>

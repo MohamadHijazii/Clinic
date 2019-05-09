@@ -44,5 +44,7 @@ namespace Clinic.Models
 
         public List<Report> reports { get; set; }
 
+        public string UserID { get; set; }
+
     }
 }

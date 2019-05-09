@@ -29,10 +29,10 @@ namespace Clinic
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     context.Database.Migrate();
 
-                    DoctorsData.Initialize(services);
-                    InsuranceData.Initialize(services);
-                    PatientData.Initialize(services);
-                    AssistantData.Initialize(services);
+                    //DoctorsData.Initialize(services);
+                   // InsuranceData.Initialize(services);
+                   // PatientData.Initialize(services);
+                   // AssistantData.Initialize(services);
                 }
                 catch (Exception ex)
                 {
