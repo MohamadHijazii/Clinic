@@ -5,64 +5,61 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Reports</h1>
+<h1>Reports</h1><br />
 
 
 @if (Model.Count() > 0)
 {
-<table class="table">
-    <thead>
-        <tr>
-            <th>
+    <table class="table">
+        <thead class="thead-light" >
+            <tr>
+                <th scope="row">
                     Patient ID
-            </th>
-            <th>
-                Patient Name
-            </th>
-            <th>
-                Date
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-
-
-            @foreach (var consultation in item.consultations)
+                </th>
+                <th scope="row">
+                    Patient Name
+                </th>
+                <th scope="row">
+                    Date
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
             {
-                <tr>
-                    <td>                               
-                        @item.Id
-                    </td>
-                    
-                    <td>
-                        @item.display_name
-                    </td>
-                    <td>
-                        @consultation.date
-                    </td>                    
-                </tr>
+                @foreach (var consultation in item.consultations)
+                {
+                    <tr class="table-light">
+                        <th scope="row">
+                            @item.Id
+                            </th>
 
-                <tr>
+                       <td>
+                            @item.display_name
+                        </td>
+                        <td>
+                            @consultation.date
+                        </td>
+                    </tr>
 
-                    <td>
-                        @consultation.title
-                    </td>
+                    <tr class="table-primary">
 
-                    <td></td>
-                    <td>
-                        <b class="text-success">COST:</b> @consultation.cost$
-                    </td>
-                </tr>
+                        <td>
+                            @consultation.title
+                        </td>
+
+                        <td></td>
+                        <td class="alert alert-success table-active">
+                            <b class="text-danger">COST:</b> <b>@consultation.cost$</b>
+                        </td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
 }
 else
 {
-
     <h3 class="text-danger">No patients Available</h3>
 
 }

@@ -3,6 +3,41 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome <span class="text-warning">to</span> our <span class="text-warning">Clinic</span> </h1>
+    <h2>:)</h2>
 </div>
+
+<h4 class="text-danger">Accounts:</h4>
+<ul>
+    <li>
+        admin@admin.com
+    </li>
+
+    <li>
+        doctor@doctor.com
+    </li>
+
+    <li>
+        assisstant@assisstant.com
+    </li>
+
+    <li>
+        insurance@insurance.com
+    </li>
+
+
+    <li>
+        patient@patient.com
+    </li>
+</ul>
+
+<p>They all have <a id="pass" title="Press to unlock">********</a> as <b>password</b></p>
+
+
+<script>
+    $(document).ready(function () {
+        $("a").click(function () {
+            $("#pass").html("<i>Test@123</i>");
+        });
+    });
+    </script>

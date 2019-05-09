@@ -17,6 +17,10 @@
         {
 
             <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Messages" asp-action="Index">Inbox</a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link text-light" asp-area="" asp-controller="Doctors" asp-action="Index">Doctors</a>
             </li>
 
@@ -69,7 +73,12 @@
     else
     {
         <li class="nav-item">
+            <a class="nav-link text-light" asp-area="" asp-controller="Messages" asp-action="Create">Contact Us</a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
+
     }
 </ul>

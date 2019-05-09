@@ -11,54 +11,59 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" title="Type in a patient name" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
-    </div>  
+<div class="input-group mb-3">
+    <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" title="Type in a patient name" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+</div>
 <br />
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.patient)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.doctor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.date)
-            </th>
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.patient.display_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.doctor.display_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.title)
-            </td>          
-            <td>
-                @Html.DisplayFor(modelItem => item.date)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
 
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" id="myTable">
+            <thead>
+                <tr class="table-danger">
+                    <th>
+                        @Html.DisplayNameFor(model => model.patient)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.doctor)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.date)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.patient.display_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.doctor.display_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.date)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 <script>
@@ -73,6 +78,7 @@
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td")[0];
+
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {

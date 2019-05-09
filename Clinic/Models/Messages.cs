@@ -12,23 +12,23 @@ namespace Clinic.Models
 
         [Required]
         [StringLength(300)]
-        [Display(Name = "Name*")]
+        [Display(Name = "Name")]
         public string name { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
         [StringLength(150)]
-        [Display(Name = "Email*")]
+        [Display(Name = "Email")]
         public string email { get; set; }
 
         [Required]
         [StringLength(150)]
-        [Display(Name = "Subject*")]
+        [Display(Name = "Subject")]
         public string subject { get; set; }
 
         [Required]
         [DataType(DataType.MultilineText)]
-        [Display(Name = "Message*")]
+        [Display(Name = "Message")]
         public string message { get; set; } 
 
         [Required]

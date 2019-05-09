@@ -21,7 +21,7 @@ namespace Clinic.Controllers
         }
 
   
-
+        [Authorize(Roles ="Insurance")]
         public IActionResult Report()
         {
             var consultations = _context.consultations

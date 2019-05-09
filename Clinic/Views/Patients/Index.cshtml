@@ -5,51 +5,56 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1 class="text-info">List of Patients</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.display_name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.mobile)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.email)
-            </th>
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped ">
+            <thead>
+                <tr class="table-info">
+                    <th>
+                        @Html.DisplayNameFor(model => model.display_name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.mobile)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.email)
+                    </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.blood_type)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.display_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.mobile)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>           
-            <td>
-                @Html.DisplayFor(modelItem => item.blood_type)
-            </td>           
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                    <th>
+                        @Html.DisplayNameFor(model => model.blood_type)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.display_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.mobile)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.blood_type)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

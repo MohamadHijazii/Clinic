@@ -1,0 +1,65 @@
+﻿@model Clinic.Models.Messages
+
+@{
+    ViewData["Title"] = "Contact Us";
+    Layout = "~/Views/Shared/_contactUs.cshtml";
+}
+
+
+<div class="container-contact100">
+
+    <div id="content">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Back</a>
+    </div>
+
+    <div class="contact100-map" id="google_map" data-map-x="40.722047" data-map-y="-73.986422" data-pin="images/icons/map-marker.png" data-scrollwhell="0" data-draggable="1"></div>
+
+    <div class="wrap-contact100">
+        <form asp-action="Create" class="contact100-form validate-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span class="contact100-form-title">
+                Contact Us
+            </span>
+
+            <div class="wrap-input100 validate-input" data-validate="Please enter your name">
+                <input asp-for="name" class="input100" placeholder="Full Name" />
+                <span class="focus-input100"></span>
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+
+
+            <div class="wrap-input100 validate-input" data-validate="Please enter email: e@a.x">
+                <input asp-for="email" class="input100" placeholder="Email" />
+                <span class="focus-input100"></span>
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input" data-validate="Please enter your Subject">
+                <input asp-for="subject" class="input100" placeholder="Subject" />
+                <span class="focus-input100"></span>
+                <span asp-validation-for="subject" class="text-danger"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input" data-validate="Please enter your message">
+                <textarea asp-for="message" class="input100" placeholder="Your Message"></textarea>
+                <span class="focus-input100"></span>
+                <span asp-validation-for="message" class="text-danger"></span>
+            </div>
+
+            <div class="container-contact100-form-btn">
+                <button class="contact100-form-btn">
+                    Send Email
+                </button>
+            </div>
+        </form>
+
+        <div class="contact100-more">
+            Contact our 24/7 call center: <span class="contact100-more-highlight">+961 76 938 160</span>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
