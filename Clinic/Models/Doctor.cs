@@ -52,10 +52,6 @@ namespace Clinic.Models
             set { }
         }
 
-
-        public string UserID { get; set; }
-
-
         public List<Consultation> consultations { get; set; }
 
         [StringLength(10)]

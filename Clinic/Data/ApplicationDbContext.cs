@@ -24,11 +24,11 @@ namespace Clinic.Data
         public DbSet<Report> reports { get; set; }
         public DbSet<Dates> dates { get; set; }
         public DbSet<List> lists { get; set; }
-        public DbSet<Reminder_admin> reminder_Admins { get; set; }
-        public DbSet<Reminder_doctor> reminder_Doctors { get; set; }
-        public DbSet<Reminder_insurance> reminder_Insurances { get; set; }
-        public DbSet<Reminder_patient> reminder_Patients { get; set; }
-        public DbSet<Reminder_assistant> reminder_Assistants { get; set; }
+        public DbSet<Reminder_admin> reminders { get; set; }
+        //public DbSet<Reminder_doctor> reminder_Doctors { get; set; }
+        //public DbSet<Reminder_insurance> reminder_Insurances { get; set; }
+        //public DbSet<Reminder_patient> reminder_Patients { get; set; }
+        //public DbSet<Reminder_assistant> reminder_Assistants { get; set; }
 
     }
 }

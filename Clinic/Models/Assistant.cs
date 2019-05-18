@@ -48,8 +48,6 @@ namespace Clinic.Models
             set { }
         }
 
-        public string UserID { get; set; }
-
         [Display(Name = "Relative Doctor")]
         public int ref_doctor { get; set; }
 

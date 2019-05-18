@@ -19,6 +19,7 @@ namespace Clinic.Models
 
         public Doctor doctor { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Select a Date")]
         public DateTime date { get; set; }
 
